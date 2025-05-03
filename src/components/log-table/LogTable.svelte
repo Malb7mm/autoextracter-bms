@@ -1,7 +1,6 @@
 <script lang="ts">
-  import { v4 as uuidv4 } from 'uuid';
   import { fade } from "svelte/transition";
-  import { logs, logInfo } from './logMessages.svelte';
+  import { logs } from './logMessages.svelte';
 </script>
 
 <div class="container">

@@ -45,15 +45,19 @@ header > a {
   background-color: #aaa0;
   height: 100%;
   padding: 0 10px;
-  transition: background-color 0.1s, color 0.1s, font-weight 0.1s;
+  transition: background-color 0.1s, color 0.1s, font-weight 0.1s, border-bottom 0.1s;
 
   display: flex;
   align-items: center;
+  border-bottom: solid 2px #9790;
 }
 
 header > a.active {
   color: #979;
   font-weight: 700;
+
+  box-sizing: content-box;
+  border-bottom: solid 2px #979;
 }
 
 header > a:hover {

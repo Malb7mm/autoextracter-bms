@@ -22,7 +22,7 @@
 <style>
 
 :global(body) {
-  background-color: hsl(0, 0%, 97%);
+  background-color: var(--bg-color);
 }
 
 header {
@@ -34,7 +34,7 @@ header {
   align-items: center;
   column-gap: 10px;
 
-  background-color: hsl(0, 0%, 97%);
+  background-color: var(--bg-color);
   border-bottom: solid 1px #aaa;
   box-shadow: 0 0 3px #aaa;
   font-size: 0.8rem;

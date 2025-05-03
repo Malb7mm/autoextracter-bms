@@ -52,7 +52,7 @@ header > a {
 }
 
 header > a.active {
-  color: #949;
+  color: #979;
   font-weight: 700;
 }
 

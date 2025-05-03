@@ -1,10 +1,19 @@
+<script>
+  import "@/styles/styles.css";
+  import { page } from '$app/stores';
+
+  const tabs = [
+    { path: '/logs', label: 'ログ' },
+    { path: '/settings', label: '設定' },
+  ];
+</script>
+
 <header>
-  <button class="logs">
-    ログ
-  </button>
-  <button class="settings">
-    設定
-  </button>
+  {#each tabs as {path, label} }
+    <a href="{path}" class="{$page.url.pathname === path ? "active" : ""}">
+      {label}
+    </a>
+  {/each}
 </header>
 <main>
   <slot/>
@@ -32,14 +41,22 @@ header {
   color: #222;
 }
 
-header > button {
+header > a {
   background-color: #aaa0;
   height: 100%;
   padding: 0 10px;
-  transition: background-color 0.1s;
+  transition: background-color 0.1s, color 0.1s, font-weight 0.1s;
+
+  display: flex;
+  align-items: center;
 }
 
-header > button:hover {
+header > a.active {
+  color: #949;
+  font-weight: 700;
+}
+
+header > a:hover {
   background-color: #aaa3;
 }
 

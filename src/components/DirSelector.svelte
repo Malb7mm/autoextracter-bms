@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { isValidDir } from "@/libs/fs";
+  import { isValidDir } from "@/libs/commands/fs";
   import { open } from "@tauri-apps/plugin-dialog";
   import { onMount } from "svelte";
   import { fade } from "svelte/transition";

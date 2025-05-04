@@ -20,6 +20,7 @@ pub fn run() {
             fs::get_bin_dir, 
             fs::is_valid_dir,
             config::write_config,
+            config::load_config,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

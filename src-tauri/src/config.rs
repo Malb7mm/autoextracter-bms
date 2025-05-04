@@ -1,4 +1,4 @@
-use std::sync::Mutex;
+use std::sync::{Arc, Mutex};
 
 use serde::{Serialize, Deserialize};
 use optional_struct::{optional_struct, Applicable};
@@ -61,6 +61,7 @@ impl ::std::default::Default for Config {
   }
 }
 
+#[tauri::command]
 pub fn load_config() -> Config {
   confy::load("autoextracter-bms", "config").expect("Failed to load configuration")
 }
@@ -70,7 +71,7 @@ pub fn save_config(config: &Config) {
 }
 
 #[tauri::command]
-pub fn write_config(config: OptionalConfig, state: State<'_, Mutex<AppState>>) {
+pub fn write_config(config: OptionalConfig, state: State<'_, Arc<Mutex<AppState>>>) {
   let mut state = state.lock().unwrap();
   let state_config = &mut state.config;
   config.apply_to(state_config);

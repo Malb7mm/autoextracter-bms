@@ -2,6 +2,8 @@
   import "@/styles/styles.css";
   import { setupViewTransition } from 'sveltekit-view-transition';
   import { page } from '$app/stores';
+  import { onMount } from "svelte";
+  import { initialize } from "./initialize.svelte";
 
   const tabs = [
     { path: '/logs', label: 'ログ' },
@@ -9,6 +11,10 @@
   ];
 
   setupViewTransition();
+  
+  onMount(() => {
+    initialize();
+  });
 </script>
 
 <header>

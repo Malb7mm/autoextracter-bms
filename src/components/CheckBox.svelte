@@ -5,10 +5,6 @@
   export let value: boolean = false;
   export let onUpdate: (value: boolean) => void = (v) => {};
   
-  onMount(() => {
-    // TODO: value初期化
-  });
-
   const uid = uuidv4();
 </script>
 

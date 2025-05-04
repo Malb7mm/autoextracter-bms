@@ -2,24 +2,35 @@
   import CheckBox from "@/components/CheckBox.svelte";
   import DirSelector from "@/components/DirSelector.svelte";
   import SelectBox from "@/components/SelectBox.svelte";
-  import { variables } from "./variables.svelte";
-  import { onDestroy, onMount } from "svelte";
+  import { setVariables, variables, type PartialConfig } from "./variables.svelte";
+  import { onMount } from "svelte";
 
-  let monitorDir: string;
-  let outputDir: string;
-  let moveDir: string;
-  let handleOptionExtracted: string;
+  let states: PartialConfig = {
+    directory: {
+      monitor: "",
+      output: "",
+    },
+    behavior: {
+      create_wrapper_folder: false,
+      extracted_handling: {
+        handling_mode: "NoAction",
+        delete_permanently: false,
+        move_destination: "",
+      }
+    },
+  }
+  let initialized = false;
 
   onMount(() => {
-    ({monitorDir, outputDir, moveDir, handleOptionExtracted} = variables);
+    states = variables
+    initialized = true;
   });
 
-  onDestroy(() => {
-    variables.monitorDir = monitorDir;
-    variables.outputDir = outputDir;
-    variables.moveDir = moveDir;
-    variables.handleOptionExtracted = handleOptionExtracted;
-  });
+  $: {
+    if (initialized) {
+      setVariables(states);
+    }
+  }
 </script>
 
 <div class="container">
@@ -41,7 +52,7 @@
           </p>
         </div>
         <div class="controller">
-          <DirSelector bind:value={monitorDir}/>
+          <DirSelector bind:value={states.directory.monitor}/>
         </div>
       </section>
       <section>
@@ -54,7 +65,7 @@
           </p>
         </div>
         <div class="controller">
-          <DirSelector bind:value={outputDir}/>
+          <DirSelector bind:value={states.directory.output}/>
         </div>
       </section>
     </section>
@@ -63,7 +74,7 @@
         動作オプション
       </h2>
       <div class="controller">
-        <CheckBox>
+        <CheckBox bind:value={states.behavior.create_wrapper_folder}>
           ダバァを抑制する（アーカイブ内が一つのフォルダでまとめられていない場合、圧縮ファイルと同じ名前のフォルダを作成し、その中に展開します）
         </CheckBox>
       </div>
@@ -77,20 +88,20 @@
           </p>
         </div>
         <div class="controller">
-          <SelectBox bind:value={handleOptionExtracted}
+          <SelectBox bind:value={states.behavior.extracted_handling.handling_mode}
             options={[
-              ["none", "何もしない"],
-              ["delete", "自動的に削除する"],
-              ["move", "指定ディレクトリへ移動する"]
+              ["NoAction", "何もしない"],
+              ["Delete", "自動的に削除する"],
+              ["Move", "指定ディレクトリへ移動する"]
             ]}
           />
-          <div class="{handleOptionExtracted == "delete" ? "" : "disabled"}">
-            <CheckBox>
+          <div class="{states.behavior.extracted_handling.handling_mode == "Delete" ? "" : "disabled"}">
+            <CheckBox bind:value={states.behavior.extracted_handling.delete_permanently}>
               完全に削除する（チェックボックスが外れている場合はごみ箱へ移動します）
             </CheckBox>
           </div>
-          <div class="{handleOptionExtracted == "move" ? "" : "disabled"}">
-            <DirSelector bind:value={moveDir} disabled={handleOptionExtracted != "move"}/>
+          <div class="{states.behavior.extracted_handling.handling_mode == "Move" ? "" : "disabled"}">
+            <DirSelector bind:value={states.behavior.extracted_handling.move_destination} disabled={states.behavior.extracted_handling.handling_mode != "Move"}/>
           </div>
         </div>
       </section>

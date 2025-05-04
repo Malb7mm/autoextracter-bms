@@ -6,7 +6,7 @@ pub fn get_bin_dir() -> Result<String, String> {
     let dir = path
         .parent()
         .and_then(|p| p.to_str())
-        .ok_or_else(|| "親ディレクトリを取得できませんでした".to_string())?;
+        .ok_or_else(|| "Failed to get binary directory".to_string())?;
     Ok(dir.to_string())
 }
 

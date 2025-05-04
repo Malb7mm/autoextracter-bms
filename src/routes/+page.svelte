@@ -1,3 +1,4 @@
 <script lang="ts">
-  import "@/styles/styles.css";
+  import { goto } from "$app/navigation";
+  goto("/logs");
 </script>

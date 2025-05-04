@@ -9,10 +9,10 @@ const config = {
   preprocess: vitePreprocess(),
   kit: {
     adapter: adapter(),
+    alias: {
+      "@": "./src"
+    }
   },
-  alias: {
-    "@": "./src"
-  }
 };
 
 export default config;

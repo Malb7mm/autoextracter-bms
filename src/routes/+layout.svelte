@@ -1,11 +1,14 @@
-<script>
+<script lang="ts">
   import "@/styles/styles.css";
+  import { setupViewTransition } from 'sveltekit-view-transition';
   import { page } from '$app/stores';
 
   const tabs = [
     { path: '/logs', label: 'ログ' },
     { path: '/settings', label: '設定' },
   ];
+
+  setupViewTransition();
 </script>
 
 <header>
@@ -23,6 +26,7 @@
 
 :global(body) {
   background-color: var(--bg-color);
+  overflow: hidden;
 }
 
 header {
@@ -62,6 +66,10 @@ header > a.active {
 
 header > a:hover {
   background-color: #aaa3;
+}
+
+main {
+  padding: 30px 50px;
 }
 
 </style>

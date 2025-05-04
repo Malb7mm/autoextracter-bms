@@ -22,7 +22,7 @@
             <td class="gray">
               -
             </td>
-            <td class="selectable gray">
+            <td class="gray">
               ここにログが出力されます
             </td>
           </tr>
@@ -52,14 +52,13 @@
     display: flex;
     flex-direction: column;
 
-    height: calc(100vh - 100px);
+    height: calc(100vh - 160px);
   }
 
   .table-wrapper {
     box-shadow: 0 0 3px #0004;
     border-radius: 8px;
     width: 100%;
-    margin: 10px 10px;
 
     overflow-y: scroll;
     max-height: calc(100vh - 40px);

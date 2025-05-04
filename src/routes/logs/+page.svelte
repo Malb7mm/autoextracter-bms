@@ -7,9 +7,3 @@
     <LogTable/>
   </section>
 </div>
-
-<style>
-  section {
-    padding: 30px 30px;
-  }
-</style>

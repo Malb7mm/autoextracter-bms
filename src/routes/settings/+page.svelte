@@ -2,11 +2,24 @@
   import CheckBox from "@/components/CheckBox.svelte";
   import DirSelector from "@/components/DirSelector.svelte";
   import SelectBox from "@/components/SelectBox.svelte";
+  import { variables } from "./variables.svelte";
+  import { onDestroy, onMount } from "svelte";
 
   let monitorDir: string;
   let outputDir: string;
   let moveDir: string;
   let handleOptionExtracted: string;
+
+  onMount(() => {
+    ({monitorDir, outputDir, moveDir, handleOptionExtracted} = variables);
+  });
+
+  onDestroy(() => {
+    variables.monitorDir = monitorDir;
+    variables.outputDir = outputDir;
+    variables.moveDir = moveDir;
+    variables.handleOptionExtracted = handleOptionExtracted;
+  });
 </script>
 
 <div class="container">

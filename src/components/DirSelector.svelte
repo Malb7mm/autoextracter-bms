@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { isValidDir } from "@/libs/fs";
+  import { open } from "@tauri-apps/plugin-dialog";
   import { onMount } from "svelte";
   import { fade } from "svelte/transition";
 
@@ -8,17 +10,32 @@
 
   let isInvalid = false;
 
-  const openDialog = () => {
-    onUpdate(value);
+  const openDialog = async () => {
+    const path = await open({
+      multiple: false,
+      directory: true,
+    });
+    if (path) {
+      value = path;
+      checkUpdate();
+    }
   }
 
+  const checkUpdate = async () => {
+    isInvalid = !await isValidDir(value);
+    if (!isInvalid) {
+      onUpdate(value);
+    }
+  }
+  $: {value; checkUpdate();}
+
   onMount(() => {
-    // TODO: value初期化
+    checkUpdate();
   });
 </script>
 
 <div class="container">
-  <input type="text" placeholder="{value}" bind:value onchange={() => {onUpdate(value)}} readonly={disabled}/>
+  <input type="text" placeholder="{value}" bind:value readonly={disabled}/>
   <button onclick={openDialog} disabled={disabled}>
     ...
   </button>

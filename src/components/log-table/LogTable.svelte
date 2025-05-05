@@ -87,6 +87,34 @@
     background-color: var(--bg-color);
   }
 
+  .table tbody td {
+    vertical-align: middle;
+    line-height: 1.2lh;
+  }
+
+  .table tbody td a {
+    text-decoration: underline;
+    color: #05a;
+  }
+
+  .table tbody tr.Alert td {
+    background-color: #fec;
+  }
+
+  .table tbody tr.Alert td:nth-child(1) {
+    font-weight: 600;
+    color: #742
+  }
+
+  .table tbody tr.Error td {
+    background-color: #fbb;
+  }
+
+  .table tbody tr.Error td:nth-child(1) {
+    font-weight: 600;
+    color: #722
+  }
+
   .table td.selectable {
     user-select: text;
   }

@@ -1,6 +1,9 @@
 <script lang="ts">
   import { fade } from "svelte/transition";
-  import { logs } from './logMessages.svelte';
+  import { log, logs } from './logMessages.svelte';
+  import { openDir } from "@/libs/commands/fs";
+
+  log("Error", "test", "file:///C:/", new Date().toISOString());
 </script>
 
 <div class="container">
@@ -10,6 +13,9 @@
         <tr>
           <td>
             レベル
+          </td>
+          <td>
+            時刻
           </td>
           <td>
             メッセージ
@@ -23,17 +29,27 @@
               -
             </td>
             <td class="gray">
+              -
+            </td>
+            <td class="gray">
               ここにログが出力されます
             </td>
           </tr>
         {:else}
-          {#each logs as {id, message, jumpTo, type} (id)}
+          {#each logs as {id, message, jumpTo, createdAt, type} (id)}
             <tr transition:fade={{duration: 100}} class="{type}">
               <td>
                 {type}
               </td>
+              <td>
+                {createdAt.getHours()}:{createdAt.getMinutes()}
+              </td>
               <td class="selectable">
-                {#if jumpTo}
+                {#if jumpTo?.startsWith("file:///")}
+                  <button onclick={async () => {await openDir(jumpTo.slice(8))}}>
+                    {message}
+                  </button>
+                {:else if jumpTo}
                   <a href="{jumpTo}">{message}</a>
                 {:else}
                   {message}
@@ -74,9 +90,13 @@
     padding: 3px 20px;
   }
 
-  .table td:nth-child(1) {
-    width: 100px;
+  .table td:nth-child(-n+2) {
+    width: 60px;
     text-align: center;
+  }
+
+  .table td:nth-child(3) {
+    width: 100%;
   }
 
   .table thead td {

@@ -16,7 +16,8 @@
     "@tauri-apps/api": "^2",
     "@tauri-apps/plugin-dialog": "~2",
     "@tauri-apps/plugin-fs": "~2.2.1",
-    "@tauri-apps/plugin-opener": "^2",
+    "@tauri-apps/plugin-opener": "~2",
+    "lucide-svelte": "^0.507.0",
     "sveltekit-view-transition": "^0.5.3",
     "uuid": "^11.1.0"
   },

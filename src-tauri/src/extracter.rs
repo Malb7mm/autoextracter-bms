@@ -2,7 +2,7 @@ use std::sync::{mpsc, Arc, Mutex};
 use notify::{Event, Result};
 use tauri::{AppHandle, State};
 
-use crate::{command::log_alert, config::ExtractedHandlingMode, fs::is_valid_dir, AppState};
+use crate::{log::log_alert, config::ExtractedHandlingMode, fs::is_valid_dir, AppState};
 
 pub fn try_launch(state: State<'_, Arc<Mutex<AppState>>>, app: &AppHandle) {
   if !path_check(state, app) { return; }

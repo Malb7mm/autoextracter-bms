@@ -10,6 +10,6 @@
     "opener:default",
     "fs:default",
     "dialog:default",
-    "dialog:default"
+    "opener:deny-open-url"
   ]
 }

@@ -18,8 +18,11 @@ importers:
         specifier: ~2.2.1
         version: 2.2.1
       '@tauri-apps/plugin-opener':
-        specifier: ^2
+        specifier: ~2
         version: 2.2.6
+      lucide-svelte:
+        specifier: ^0.507.0
+        version: 0.507.0(svelte@5.28.2)
       sveltekit-view-transition:
         specifier: ^0.5.3
         version: 0.5.3(@sveltejs/kit@2.20.8(@sveltejs/vite-plugin-svelte@5.0.3(svelte@5.28.2)(vite@6.3.4))(svelte@5.28.2)(vite@6.3.4))(svelte@5.28.2)
@@ -530,6 +533,11 @@ packages:
   locate-character@3.0.0:
     resolution: {integrity: sha512-SW13ws7BjaeJ6p7Q6CO2nchbYEc3X3J6WrmTTDto7yMPqVSZTUyY5Tjbid+Ab8gLnATtygYtiDIJGQRRn2ZOiA==}
 
+  lucide-svelte@0.507.0:
+    resolution: {integrity: sha512-qJRbz1dWyTzV05VaXIKhPeQ6mGBTIbKI05YNymym6QZSsn/mt7P154qr4SfKl+SEJlOmYPbHVjK1D1qZwa3r3w==}
+    peerDependencies:
+      svelte: ^3 || ^4 || ^5.0.0-next.42
+
   magic-string@0.30.17:
     resolution: {integrity: sha512-sNPKHvyjVf7gyjwS4xGTaW/mCnF8wnjtifKBEhxfZ7E/S8tQ0rssrwGNn6q8JH/ohItJfSQp9mBtQYuTlH5QnA==}
 
@@ -1015,6 +1023,10 @@ snapshots:
   kleur@4.1.5: {}
 
   locate-character@3.0.0: {}
+
+  lucide-svelte@0.507.0(svelte@5.28.2):
+    dependencies:
+      svelte: 5.28.2
 
   magic-string@0.30.17:
     dependencies:

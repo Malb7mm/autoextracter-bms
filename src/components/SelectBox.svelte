@@ -1,6 +1,4 @@
 <script lang="ts" generics="T">
-  import { onMount } from "svelte";
-
   export let options: [T, string][];
   export let value: string = "";
   export let onUpdate: (value: string) => void = (v) => {};

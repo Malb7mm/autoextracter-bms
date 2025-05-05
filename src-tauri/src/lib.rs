@@ -1,7 +1,7 @@
 mod fs;
 mod config;
 mod extracter;
-mod command;
+mod log;
 use config::Config;
 use std::sync::{Arc, Mutex};
 
@@ -33,6 +33,7 @@ pub fn run() {
         .invoke_handler(tauri::generate_handler![
             fs::get_bin_dir, 
             fs::is_valid_dir,
+            fs::open_dir,
             config::write_config,
             config::load_config,
         ])

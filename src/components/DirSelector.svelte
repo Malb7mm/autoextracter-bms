@@ -4,11 +4,18 @@
   import { onMount } from "svelte";
   import { fade } from "svelte/transition";
 
-  export let value: string = "";
-  export let onUpdate: (value: string) => void = (v) => {};
-  export let disabled: boolean = false;
+  let {
+    value = $bindable(), 
+    onUpdate,
+    disabled = false,
+  }: {
+    value: string,
+    onUpdate: (value: string) => void,
+    disabled?: boolean,
+  } = $props();
 
-  let isInvalid = false;
+  let isInvalid = $state(false);
+  let rawValue = $state("");
 
   const openDialog = async () => {
     const path = await open({
@@ -22,12 +29,21 @@
   }
 
   const checkUpdate = async () => {
-    isInvalid = !await isValidDir(value);
+    isInvalid = !await isValidDir(rawValue);
     if (!isInvalid) {
+      value = rawValue;
       onUpdate(value);
     }
   }
-  $: {value; checkUpdate();}
+
+  $effect(() => {
+    rawValue;
+    checkUpdate();
+  });
+
+  $effect(() => {
+    rawValue = value;
+  });
 
   onMount(() => {
     checkUpdate();
@@ -35,7 +51,7 @@
 </script>
 
 <div class="container">
-  <input type="text" placeholder="{value}" bind:value readonly={disabled}/>
+  <input type="text" placeholder="{value}" bind:value={rawValue} readonly={disabled}/>
   <button onclick={openDialog} disabled={disabled}>
     ...
   </button>

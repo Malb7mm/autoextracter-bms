@@ -26,4 +26,6 @@ tauri-plugin-dialog = "2"
 tauri-plugin-fs = "2"
 confy = "0.6.1"
 optional_struct = "0.5.2"
+notify = "8.0.0"
+chrono = "0.4.41"
 

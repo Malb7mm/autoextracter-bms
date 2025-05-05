@@ -1,10 +1,19 @@
 mod fs;
 mod config;
+mod extracter;
+mod command;
 use config::Config;
 use std::sync::{Arc, Mutex};
 
+struct WarnedInvalid {
+    monitor: bool,
+    output: bool,
+    move_dest: bool,
+}
+
 struct AppState {
     config: Config,
+    warned_invalid: WarnedInvalid,
 }
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
@@ -12,6 +21,11 @@ pub fn run() {
     tauri::Builder::default()
         .manage(Arc::new(Mutex::new(AppState {
             config: config::load_config(),
+            warned_invalid: WarnedInvalid {
+                monitor: false,
+                output: false,
+                move_dest: false,
+            }
         })))
         .plugin(tauri_plugin_dialog::init())
         .plugin(tauri_plugin_fs::init())

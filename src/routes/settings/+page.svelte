@@ -26,7 +26,7 @@
     initialized = true;
   });
 
-  $: {
+  const onUpdate = () => {
     if (initialized) {
       setVariables(states);
     }
@@ -52,7 +52,7 @@
           </p>
         </div>
         <div class="controller">
-          <DirSelector bind:value={states.directory.monitor}/>
+          <DirSelector bind:value={states.directory.monitor} onUpdate={onUpdate}/>
         </div>
       </section>
       <section>
@@ -65,7 +65,7 @@
           </p>
         </div>
         <div class="controller">
-          <DirSelector bind:value={states.directory.output}/>
+          <DirSelector bind:value={states.directory.output} onUpdate={onUpdate}/>
         </div>
       </section>
     </section>
@@ -74,7 +74,7 @@
         動作オプション
       </h2>
       <div class="controller">
-        <CheckBox bind:value={states.behavior.create_wrapper_folder}>
+        <CheckBox bind:value={states.behavior.create_wrapper_folder} onUpdate={onUpdate}>
           ダバァを抑制する（アーカイブ内が一つのフォルダでまとめられていない場合、圧縮ファイルと同じ名前のフォルダを作成し、その中に展開します）
         </CheckBox>
       </div>
@@ -88,7 +88,7 @@
           </p>
         </div>
         <div class="controller">
-          <SelectBox bind:value={states.behavior.extracted_handling.handling_mode}
+          <SelectBox bind:value={states.behavior.extracted_handling.handling_mode} onUpdate={onUpdate}
             options={[
               ["NoAction", "何もしない"],
               ["Delete", "自動的に削除する"],
@@ -96,12 +96,12 @@
             ]}
           />
           <div class="{states.behavior.extracted_handling.handling_mode == "Delete" ? "" : "disabled"}">
-            <CheckBox bind:value={states.behavior.extracted_handling.delete_permanently}>
+            <CheckBox bind:value={states.behavior.extracted_handling.delete_permanently} onUpdate={onUpdate}>
               完全に削除する（チェックボックスが外れている場合はごみ箱へ移動します）
             </CheckBox>
           </div>
           <div class="{states.behavior.extracted_handling.handling_mode == "Move" ? "" : "disabled"}">
-            <DirSelector bind:value={states.behavior.extracted_handling.move_destination} disabled={states.behavior.extracted_handling.handling_mode != "Move"}/>
+            <DirSelector bind:value={states.behavior.extracted_handling.move_destination} disabled={states.behavior.extracted_handling.handling_mode != "Move"} onUpdate={onUpdate}/>
           </div>
         </div>
       </section>

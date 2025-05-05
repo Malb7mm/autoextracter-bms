@@ -1,11 +1,14 @@
 import { v4 as uuidv4 } from 'uuid';
 import { listen } from '@tauri-apps/api/event';
 
+type MessageType = "Info" | "Alert" | "Error";
+
 type Message = {
   id: string,
   message: string,
+  createdAt: Date,
   jumpTo?: string,
-  type: "Info" | "Alert" | "Error",
+  type: MessageType,
 }
 
 export const logs: Message[] = $state([]);
@@ -17,34 +20,13 @@ function addLog(log: Message) {
   }
 }
 
-export function logInfo(message: string, jumpTo: string | undefined = undefined) {
-  addLog({ id: uuidv4(), message, jumpTo, type: "Info" });
+export function log(type: MessageType, message: string, jumpTo: string | undefined, createdAt: string) {
+  const date = new Date(createdAt);
+  addLog({ id: uuidv4(), message, jumpTo, type, createdAt: date });
 }
 
-export function logAlert(message: string, jumpTo: string | undefined = undefined) {
-  addLog({ id: uuidv4(), message, jumpTo, type: "Alert" });
-}
-
-export function logError(message: string, jumpTo: string | undefined = undefined) {
-  addLog({ id: uuidv4(), message, jumpTo, type: "Error" });
-}
-
-type Payload = {
+export type LogMessagePayload = {
   message: string,
-  jumpTo?: string,
+  jump_to?: string,
+  created_at: string,
 }
-
-listen("log-info", e => {
-  const payload = e.payload as Payload
-  logInfo(payload.message, payload.jumpTo);
-})
-
-listen("log-alert", e => {
-  const payload = e.payload as Payload
-  logAlert(payload.message, payload.jumpTo);
-})
-
-listen("log-error", e => {
-  const payload = e.payload as Payload
-  logError(payload.message, payload.jumpTo);
-})

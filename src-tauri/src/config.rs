@@ -2,12 +2,12 @@ use std::sync::{Arc, Mutex};
 
 use serde::{Serialize, Deserialize};
 use optional_struct::{optional_struct, Applicable};
-use tauri::State;
+use tauri::{AppHandle, State};
 
-use crate::AppState;
+use crate::{extracter::try_launch, AppState};
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
-enum ExtractedHandlingMode {
+pub enum ExtractedHandlingMode {
   NoAction,
   Delete,
   Move,
@@ -15,31 +15,31 @@ enum ExtractedHandlingMode {
 
 #[optional_struct]
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
-struct Directory {
-  monitor: String,
-  output: String,
+pub struct Directory {
+  pub monitor: String,
+  pub output: String,
 }
 
 #[optional_struct]
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
-struct ExtractedHandling {
-  handling_mode: ExtractedHandlingMode,
-  delete_permanently: bool,
-  move_destination: String,
+pub struct ExtractedHandling {
+  pub handling_mode: ExtractedHandlingMode,
+  pub delete_permanently: bool,
+  pub move_destination: String,
 }
 
 #[optional_struct]
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
-struct Behavior {
-  create_wrapper_folder: bool,
-  extracted_handling: ExtractedHandling,
+pub struct Behavior {
+  pub create_wrapper_folder: bool,
+  pub extracted_handling: ExtractedHandling,
 }
 
 #[optional_struct]
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 pub struct Config {
-  directory: Directory,
-  behavior: Behavior,
+  pub directory: Directory,
+  pub behavior: Behavior,
 }
 
 impl ::std::default::Default for Config {
@@ -71,9 +71,12 @@ pub fn save_config(config: &Config) {
 }
 
 #[tauri::command]
-pub fn write_config(config: OptionalConfig, state: State<'_, Arc<Mutex<AppState>>>) {
-  let mut state = state.lock().unwrap();
-  let state_config = &mut state.config;
-  config.apply_to(state_config);
-  save_config(&state_config);
+pub fn write_config(config: OptionalConfig, state: State<'_, Arc<Mutex<AppState>>>, app: AppHandle) {
+  {
+    let mut state = state.lock().unwrap();
+    let state_config = &mut state.config;
+    config.apply_to(state_config);
+    save_config(&state_config);
+  }
+  try_launch(state, &app);
 }
